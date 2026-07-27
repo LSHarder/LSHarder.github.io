@@ -77,6 +77,18 @@
   .about-links { margin-top: 1rem; }
   .about-links a { color: var(--muted); text-decoration: none; margin-right: 1.2rem; font-size: 0.95rem; }
   .about-links a:hover { color: var(--fg); }
+  .entry-list { display: flex; flex-direction: column; gap: 1.75rem; }
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+  }
+  .entry-header h3 { margin: 0; font-size: 1.05rem; }
+  .entry-date { color: var(--muted); font-size: 0.85rem; white-space: nowrap; }
+  .entry-subtitle { color: var(--muted); font-size: 0.9rem; margin: 0.15rem 0 0; }
+  .entry p.entry-desc { margin: 0.5rem 0 0; color: var(--muted); font-size: 0.92rem; }
 </style>
 
 <header>
@@ -84,6 +96,8 @@
   <nav>
     <a href="#projects">Projects</a>
     <a href="#design">Design</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
@@ -132,6 +146,41 @@
         <h3>Design Piece Two</h3>
         <p>Short description or medium (poster, UI mockup, etc.).</p>
         <a href="#">View &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="entry-list">
+      <div class="entry">
+        <div class="entry-header">
+          <h3>Job Title — Company Name</h3>
+          <span class="entry-date">Month Year – Month Year</span>
+        </div>
+        <p class="entry-subtitle">Location / employment type</p>
+        <p class="entry-desc">Placeholder description of responsibilities and achievements.</p>
+      </div>
+      <div class="entry">
+        <div class="entry-header">
+          <h3>Job Title — Company Name</h3>
+          <span class="entry-date">Month Year – Month Year</span>
+        </div>
+        <p class="entry-subtitle">Location / employment type</p>
+        <p class="entry-desc">Placeholder description of responsibilities and achievements.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <div class="entry-list">
+      <div class="entry">
+        <div class="entry-header">
+          <h3>Degree, Field — Institution Name</h3>
+          <span class="entry-date">Year – Year</span>
+        </div>
+        <p class="entry-desc">Placeholder description (focus area, thesis, relevant coursework, etc.).</p>
       </div>
     </div>
   </section>
