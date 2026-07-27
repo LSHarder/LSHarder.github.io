@@ -1,0 +1,181 @@
+<title>Design Piece One — Lukas Sydel Harder</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #666666;
+    --card: #f5f5f5;
+    --border: #e2e2e2;
+    --accent: #2563eb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12141a;
+      --fg: #e8e8e8;
+      --muted: #9a9a9a;
+      --card: #1b1e26;
+      --border: #2a2d36;
+      --accent: #6ea8fe;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 1rem;
+  }
+  header a.back { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+  header a.back:hover { color: var(--fg); }
+  .logo { font-weight: 600; }
+  main { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+  h1 { font-size: 2.1rem; margin-bottom: 0.4rem; }
+  .subtitle { color: var(--muted); font-size: 1.05rem; margin-bottom: 3rem; }
+
+  .timeline {
+    position: relative;
+    padding: 1rem 0 2rem;
+  }
+  .timeline-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .timeline-line path {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 3;
+    stroke-linecap: round;
+    opacity: 0.45;
+  }
+
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 5rem;
+  }
+  .timeline-item.reverse { flex-direction: row-reverse; }
+  .timeline-item:last-child { margin-bottom: 0; }
+
+  .timeline-image, .timeline-text { flex: 1; min-width: 0; }
+  .timeline-image {
+    aspect-ratio: 4 / 3;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .timeline-text h3 { margin: 0 0 0.6rem; font-size: 1.15rem; }
+  .timeline-text p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  .timeline-text .step { color: var(--accent); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.4rem; display: block; }
+
+  @media (max-width: 640px) {
+    .timeline-line { left: 12px; transform: none; width: 60px; }
+    .timeline-item, .timeline-item.reverse {
+      flex-direction: column;
+      align-items: stretch;
+      padding-left: 2.5rem;
+      gap: 1rem;
+    }
+  }
+
+  footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer a { color: var(--muted); margin-right: 1.2rem; text-decoration: none; }
+  footer a:hover { color: var(--fg); }
+</style>
+
+<header>
+  <div class="logo">Lukas Sydel Harder</div>
+  <a class="back" href="../index.html#design">&larr; Back to portfolio</a>
+</header>
+
+<main>
+  <h1>Design Piece One</h1>
+  <p class="subtitle">Short description or medium (poster, UI mockup, etc.) goes here.</p>
+
+  <div class="timeline">
+    <svg class="timeline-line" viewBox="0 0 120 1200" preserveAspectRatio="none">
+      <path d="M60,0 C20,150 100,300 60,450 C20,600 100,750 60,900 C20,1050 100,1150 60,1200" />
+    </svg>
+
+    <div class="timeline-item">
+      <div class="timeline-image">Image placeholder</div>
+      <div class="timeline-text">
+        <span class="step">Step 1 — Plan and Define</span>
+        <h3>Placeholder heading</h3>
+        <p>Placeholder text describing the initial research or problem framing for this piece.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item reverse">
+      <div class="timeline-image">Image placeholder</div>
+      <div class="timeline-text">
+        <span class="step">Step 2 — Design & Prototype</span>
+        <h3>Placeholder heading</h3>
+        <p>Placeholder text describing early sketches, drafts, or design directions explored.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-image">Image placeholder</div>
+      <div class="timeline-text">
+        <span class="step">Step 3 — Implement</span>
+        <h3>Placeholder heading</h3>
+        <p>Placeholder text describing a key design decision and the reasoning behind it.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item reverse">
+      <div class="timeline-image">Image placeholder</div>
+      <div class="timeline-text">
+        <span class="step">Step 4 — Test</span>
+        <h3>Placeholder heading</h3>
+        <p>Placeholder text describing the finished piece and what it achieved.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-image">Image placeholder</div>
+      <div class="timeline-text">
+        <span class="step">Step 5 — Evaluate & Review</span>
+        <h3>Placeholder heading</h3>
+        <p>Placeholder text describing a key design decision and the reasoning behind it.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer id="contact">
+  <a href="https://github.com/LSHarder">GitHub</a>
+  <a href="mailto:l_sydel_harder@live.dk">Email</a>
+  <a href="https://www.linkedin.com/in/lukas-sydel-harder/">LinkedIn</a>
+</footer>
