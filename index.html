@@ -65,6 +65,25 @@
   .card p { margin: 0 0 0.8rem; color: var(--muted); font-size: 0.92rem; }
   .card a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
   .card a:hover { text-decoration: underline; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 0.8rem; }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: var(--border);
+    color: var(--fg);
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+  .pill::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--dot, var(--accent));
+  }
   footer {
     max-width: 900px;
     margin: 0 auto;
@@ -121,16 +140,25 @@
     <div class="grid">
       <div class="card">
         <h3>Smart Mirror in Python</h3>
+        <div class="tags">
+          <span class="pill" style="--dot:#3776AB">Python</span>
+        </div>
         <p>Smart Mirror Interface: A Python-based smart mirror application built as a group project, combining weather, calendar, and news feeds with Spotify playback control. Includes webcam-based touchless interaction: a MediaPipe hand-tracking module detects a pinch gesture (thumb + index finger) via OpenCV to let users "click" UI elements without touching the mirror.</p>
         <a href="https://github.com/esbendg/IDS-HandIn">View on GitHub &rarr;</a>
       </div>
       <div class="card">
         <h3>Photo Geolocation Map App</h3>
+        <div class="tags">
+          <span class="pill" style="--dot:#b07219">Java</span>
+        </div>
         <p>This is a project developed by five students from University of Roskilde. This project is an app called "Photomap". In the app it is possible to upload a photo to the app, and based on the location data embedded in the photo, the app can place the the photo on the map.</p>
         <a href="https://github.com/mrbl270900/PhotoMap">View on GitHub &rarr;</a>
       </div>
       <div class="card">
         <h3>Cycling Fantasy Manager (Odds based)</h3>
+        <div class="tags">
+          <span class="pill" style="--dot:#3178c6">TypeScript</span>
+        </div>
         <p>It is a web application for cycling fantasy leagues, based on odds of riders winning instead of points being distributed equally. Some unlikely riders from a breakaway will give more points based on odds.</p>
         <a href="https://github.com/LSHarder/Cycling-Odds-Manager">View on GitHub &rarr;</a>
       </div>
