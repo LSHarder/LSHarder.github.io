@@ -60,11 +60,23 @@
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
   }
   .card h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }
   .card p { margin: 0 0 0.8rem; color: var(--muted); font-size: 0.92rem; }
   .card a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
   .card a:hover { text-decoration: underline; }
+  .card > a, .card > .card-links { margin-top: auto; }
+  .card-links { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .card a.btn-live {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  .card a.btn-live:hover { text-decoration: none; opacity: 0.85; }
   .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 0.8rem; }
   .pill {
     display: inline-flex;
@@ -160,6 +172,18 @@
         <a href="https://github.com/mrbl270900/PhotoMap">View on GitHub &rarr;</a>
       </div>
       <div class="card">
+        <h3>Gold Value Estimator</h3>
+        <div class="tags">
+          <span class="pill" style="--dot:#68A063">Node.js</span>
+          <span class="pill" style="--dot:#000000">Express</span>
+        </div>
+        <p>Estimates the melt value of gold jewelry in DKK from a live gold spot price and USD/DKK exchange rate, based on the item's karat and weight.</p>
+        <div class="card-links">
+          <a href="https://github.com/LSHarder/Gold-Value-Estimator">View on GitHub &rarr;</a>
+          <a class="btn-live" href="https://gold-value-estimator.onrender.com" target="_blank" rel="noopener">Live demo</a>
+        </div>
+      </div>
+      <div class="card">
         <h3>Cycling Fantasy Manager (Odds based)</h3>
         <div class="tags">
           <span class="pill" style="--dot:#3178c6">TypeScript</span>
@@ -177,6 +201,7 @@
 
   <section id="design">
     <h2>Digital Design</h2>
+    <p class="tagline">This section is still being filled out - more pieces coming soon.</p>
     <div class="grid">
       <div class="card">
         <h3>Design Piece One</h3>
@@ -229,7 +254,6 @@
           <h3>MSc, Digital Transformation - Roskilde University</h3>
           <span class="entry-date">2023 - 2025</span>
         </div>
-        <p class="entry-desc">Placeholder description (focus area, thesis, relevant coursework, etc.).</p>
       </div>
     </div>
     <div class="entry-list">
@@ -238,7 +262,6 @@
           <h3>BSc, Computer Science and Humanities - Roskilde University</h3>
           <span class="entry-date">2019 - 2023</span>
         </div>
-        <p class="entry-desc">Placeholder description (focus area, thesis, relevant coursework, etc.).</p>
       </div>
     </div>
   </section>
