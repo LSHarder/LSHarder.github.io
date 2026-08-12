@@ -134,6 +134,18 @@
   }
   footer a { color: var(--muted); margin-right: 1.2rem; text-decoration: none; }
   footer a:hover { color: var(--fg); }
+
+  .floating-back {
+    position: fixed; right: 1.5rem; bottom: 1.5rem; z-index: 10;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--accent); color: #fff; text-decoration: none;
+    padding: 0.6rem 1.1rem; border-radius: 999px; font-size: 0.88rem; font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    opacity: 0; transform: translateY(8px); pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .floating-back.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .floating-back:hover { opacity: 0.9; }
 </style>
 
 <header>
@@ -341,3 +353,17 @@
   <a href="mailto:l_sydel_harder@live.dk">Email</a>
   <a href="https://www.linkedin.com/in/lukas-sydel-harder/">LinkedIn</a>
 </footer>
+
+<a class="floating-back" id="floating-back" href="../index.html#design">&larr; Back to portfolio</a>
+<script>
+  var floatingBack = document.getElementById('floating-back');
+  var footerEl = document.querySelector('footer#contact');
+  if (floatingBack && footerEl && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        floatingBack.classList.toggle('visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.1 });
+    observer.observe(footerEl);
+  }
+</script>
