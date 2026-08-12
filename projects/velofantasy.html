@@ -1,0 +1,320 @@
+
+<title>VeloFantasy — Lukas Sydel Harder</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #666666;
+    --card: #f5f5f5;
+    --border: #e2e2e2;
+    --accent: #2563eb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12141a;
+      --fg: #e8e8e8;
+      --muted: #9a9a9a;
+      --card: #1b1e26;
+      --border: #2a2d36;
+      --accent: #6ea8fe;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 1rem;
+  }
+  header a.back { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+  header a.back:hover { color: var(--fg); }
+  .logo { font-weight: 600; }
+  main { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+
+  .title-row { display: flex; align-items: center; gap: 0.9rem; margin: 0 0 0.5rem; }
+  .title-row img { width: 48px; height: 48px; border-radius: 10px; display: block; }
+  h1 { font-size: 2.1rem; margin: 0; }
+  .subtitle { color: var(--muted); font-size: 1.05rem; margin-bottom: 0.9rem; max-width: 640px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 0.4rem 0.6rem; margin: 0 0 1.4rem; }
+  .meta-row .pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.2rem 0.7rem; border-radius: 999px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--muted); font-size: 0.78rem; font-weight: 500;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.1rem; }
+  .tags .pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.2rem 0.7rem; border-radius: 999px;
+    background: var(--border); color: var(--fg);
+    font-size: 0.78rem; font-weight: 500;
+  }
+  .tags .pill::before {
+    content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%;
+    background: var(--dot, var(--accent));
+  }
+  .intro p { max-width: 700px; font-size: 0.98rem; }
+  .intro { margin-bottom: 1.5rem; }
+
+  .timeline {
+    position: relative;
+    padding: 1rem 0 2rem;
+  }
+  .timeline-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .timeline-line path {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 3;
+    stroke-linecap: round;
+    opacity: 0.45;
+  }
+
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 4.5rem;
+  }
+  .timeline-item.reverse { flex-direction: row-reverse; }
+  .timeline-item:last-child { margin-bottom: 0; }
+
+  .timeline-image, .timeline-text { flex: 1; min-width: 0; }
+  .timeline-image {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+  .timeline-image img, .timeline-image video {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .timeline-image a.zoom {
+    display: block;
+    cursor: zoom-in;
+    overflow: hidden;
+  }
+  .timeline-image a.zoom img {
+    transition: transform 0.25s ease;
+  }
+  .timeline-image a.zoom:hover img {
+    transform: scale(1.05);
+  }
+  .timeline-text h3 { margin: 0 0 0.6rem; font-size: 1.15rem; }
+  .timeline-text p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  .timeline-text .step { color: var(--accent); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.4rem; display: block; }
+
+  @media (max-width: 640px) {
+    .timeline-line { left: 12px; transform: none; width: 60px; }
+    .timeline-item, .timeline-item.reverse {
+      flex-direction: column;
+      align-items: stretch;
+      padding-left: 2.5rem;
+      gap: 1rem;
+    }
+  }
+
+  footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer a { color: var(--muted); margin-right: 1.2rem; text-decoration: none; }
+  footer a:hover { color: var(--fg); }
+
+  .floating-back {
+    position: fixed; right: 1.5rem; bottom: 1.5rem; z-index: 10;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--accent); color: #fff; text-decoration: none;
+    padding: 0.6rem 1.1rem; border-radius: 999px; font-size: 0.88rem; font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    opacity: 0; transform: translateY(8px); pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .floating-back.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .floating-back:hover { opacity: 0.9; }
+</style>
+
+<header>
+  <div class="logo">Lukas Sydel Harder</div>
+  <a class="back" href="../index.html#projects">&larr; Back to portfolio</a>
+</header>
+
+<main>
+  <div class="title-row">
+    <h1>VeloFantasy</h1>
+    <img src="images/velofantasy-logo.svg" alt="VeloFantasy app logo: a cycling jersey combining the Tour de France, Vuelta and Giro leader-jersey colors">
+  </div>
+  <p class="subtitle">An odds-based fantasy cycling league for the Tour de France — bold picks pay off more than safe ones.</p>
+
+  <div class="tags">
+    <span class="pill" style="--dot:#3178c6">TypeScript</span>
+    <span class="pill" style="--dot:#61DAFB">React</span>
+    <span class="pill" style="--dot:#68A063">Express</span>
+    <span class="pill" style="--dot:#336791">PostgreSQL</span>
+    <span class="pill" style="--dot:#F26207">Replit</span>
+  </div>
+  <div class="meta-row">
+    <span class="pill">Solo project</span>
+    <span class="pill">Built with Claude Code</span>
+    <span class="pill">Live rider data via ProCyclingStats</span>
+  </div>
+
+  <div class="intro">
+    <p>Most fantasy sports score everyone the same way, so picking the favorite is always the safe move. VeloFantasy flips that: every rider's points are multiplied by their betting odds, so an 80/1 breakaway rider who finishes well is worth dramatically more than a favorite doing the same thing. Managers draft 8 riders and a captain, then watch the odds math play out stage by stage across all 21 stages of the Tour.</p>
+    <p>Rider data, odds and stage results sync from ProCyclingStats through an admin panel, so the league runs on the real race rather than manually entered results.</p>
+  </div>
+
+  <div class="timeline">
+    <svg class="timeline-line" viewBox="0 0 120 1600" preserveAspectRatio="none">
+      <path d="M60,0 C20,150 100,300 60,450 C20,600 100,750 60,900 C20,1050 100,1150 60,1250 C20,1350 100,1450 60,1600" />
+    </svg>
+
+    <div class="timeline-item">
+      <div class="timeline-image">
+        <a class="zoom" href="images/01-landing.jpg" target="_blank" rel="noopener">
+          <img src="images/01-landing.jpg" alt="VeloFantasy landing page with headline 'The Bold Win The Tour'">
+        </a>
+      </div>
+      <div class="timeline-text">
+        <span class="step">Step 1 — Landing</span>
+        <h3>The pitch: bold picks pay off</h3>
+        <p>The landing page sets up the core mechanic up front: odds-multiplied scoring, live stage-by-stage results, and a global leaderboard, before a visitor ever signs up.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item reverse">
+      <div class="timeline-image">
+        <a class="zoom" href="images/02-dashboard.jpg" target="_blank" rel="noopener">
+          <img src="images/02-dashboard.jpg" alt="Dashboard showing total points, global rank, current stage and squad overview">
+        </a>
+      </div>
+      <div class="timeline-text">
+        <span class="step">Step 2 — Dashboard</span>
+        <h3>Everything at a glance after login</h3>
+        <p>Total points, global rank and the current stage's status sit up top, with your squad and recent stage-by-stage point swings right below.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-image">
+        <a class="zoom" href="images/03-my-team.jpg" target="_blank" rel="noopener">
+          <img src="images/03-my-team.jpg" alt="Team drafting screen with 8 selected riders, a captain, and a searchable rider pool showing live odds">
+        </a>
+      </div>
+      <div class="timeline-text">
+        <span class="step">Step 3 — Draft your team</span>
+        <h3>8 riders, 1 captain, live odds</h3>
+        <p>Every rider in the pool shows their current odds while you draft, so the risk/reward tradeoff is visible before you commit. Transfers lock once a stage starts.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item reverse">
+      <div class="timeline-image">
+        <a class="zoom" href="images/04-stages.jpg" target="_blank" rel="noopener">
+          <img src="images/04-stages.jpg" alt="List of all 21 Tour de France stages with type tags and completion status">
+        </a>
+      </div>
+      <div class="timeline-text">
+        <span class="step">Step 4 — The route</span>
+        <h3>All 21 stages, tagged by type</h3>
+        <p>Flat, hilly, mountain and time-trial stages are tagged separately, since they change which riders are likely to score, and each stage tracks its own completion status.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-image">
+        <video src="images/stage-showcase.mp4" autoplay muted loop playsinline preload="auto"></video>
+      </div>
+      <div class="timeline-text">
+        <span class="step">Step 5 — In action</span>
+        <h3>Watch a stage resolve</h3>
+        <p>A short screen recording of a stage's results being processed and scored live, showing the flow from race result to updated points.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item reverse">
+      <div class="timeline-image">
+        <a class="zoom" href="images/05-my-points.jpg" target="_blank" rel="noopener">
+          <img src="images/05-my-points.jpg" alt="Points breakdown page showing odds multiplier, position points, jersey bonus, KOM and sprint points per rider">
+        </a>
+      </div>
+      <div class="timeline-text">
+        <span class="step">Step 6 — Full transparency</span>
+        <h3>Every point, explained</h3>
+        <p>Click into any stage to see exactly how each rider's score was built: base odds multiplier, position points, and bonuses for jersey, KOM and sprint results.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-image">
+        <a class="zoom" href="images/06-leaderboard.jpg" target="_blank" rel="noopener">
+          <img src="images/06-leaderboard.jpg" alt="Global leaderboard ranking all managers by total points">
+        </a>
+      </div>
+      <div class="timeline-text">
+        <span class="step">Step 7 — Leaderboard</span>
+        <h3>Where everyone stacks up</h3>
+        <p>A simple global ranking of every manager's team, so the payoff of a bold draft (or the cost of a safe one) is visible at a glance.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item reverse">
+      <div class="timeline-image">
+        <a class="zoom" href="images/07-admin.jpg" target="_blank" rel="noopener">
+          <img src="images/07-admin.jpg" alt="Admin race control panel for syncing riders from ProCyclingStats and processing stage results">
+        </a>
+      </div>
+      <div class="timeline-text">
+        <span class="step">Step 8 — Race Control</span>
+        <h3>Keeping the league in sync with the real race</h3>
+        <p>An admin panel syncs rider and odds data from ProCyclingStats and processes each stage's results against its deadline, so the whole league runs on the actual Tour de France as it happens.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer id="contact">
+  <a href="https://github.com/LSHarder/Cycling-Odds-Manager">GitHub</a>
+  <a href="mailto:l_sydel_harder@live.dk">Email</a>
+  <a href="https://www.linkedin.com/in/lukas-sydel-harder/">LinkedIn</a>
+</footer>
+
+<a class="floating-back" id="floating-back" href="../index.html#projects">&larr; Back to portfolio</a>
+<script>
+  var floatingBack = document.getElementById('floating-back');
+  var footerEl = document.querySelector('footer#contact');
+  if (floatingBack && footerEl && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        floatingBack.classList.toggle('visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.1 });
+    observer.observe(footerEl);
+  }
+</script>
