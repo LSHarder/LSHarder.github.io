@@ -1,0 +1,309 @@
+
+<title>Organic Light — Lukas Sydel Harder</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #666666;
+    --card: #f5f5f5;
+    --border: #e2e2e2;
+    --accent: #2563eb;
+    --warn: #b45309;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12141a;
+      --fg: #e8e8e8;
+      --muted: #9a9a9a;
+      --card: #1b1e26;
+      --border: #2a2d36;
+      --accent: #6ea8fe;
+      --warn: #fbbf24;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 1rem;
+  }
+  header a.back { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+  header a.back:hover { color: var(--fg); }
+  .logo { font-weight: 600; }
+  main { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+
+  h1 { font-size: 2.1rem; margin: 0 0 0.5rem; }
+  .subtitle { color: var(--muted); font-size: 1.05rem; margin-bottom: 0.9rem; max-width: 640px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 0.4rem 0.6rem; margin: 0 0 1.1rem; }
+  .meta-row .pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.2rem 0.7rem; border-radius: 999px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--muted); font-size: 0.78rem; font-weight: 500;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.4rem; }
+  .tags.small { margin: 0 0 1.1rem; }
+  .tags .pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.2rem 0.7rem; border-radius: 999px;
+    background: var(--border); color: var(--fg);
+    font-size: 0.78rem; font-weight: 500;
+  }
+  .tags.small .pill { font-size: 0.72rem; padding: 0.15rem 0.6rem; }
+  .tags .pill::before {
+    content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%;
+    background: var(--dot, var(--accent));
+  }
+
+  .figure { margin: 1.5rem 0; }
+  .figure img {
+    width: 100%; display: block; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--card);
+  }
+  .figure figcaption { color: var(--muted); font-size: 0.82rem; margin-top: 0.5rem; }
+
+  .case-section { padding: 2.75rem 0; border-top: 1px solid var(--border); }
+  .case-section:first-of-type { border-top: none; padding-top: 0.5rem; }
+  .case-section .eyebrow {
+    color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em;
+    font-size: 0.78rem; font-weight: 600; margin-bottom: 0.5rem;
+  }
+  .case-section h2 { font-size: 1.45rem; margin: 0 0 0.7rem; }
+  .case-section h3 { font-size: 1.05rem; margin: 1.8rem 0 0.5rem; }
+  .case-section h3:first-of-type { margin-top: 0.8rem; }
+  .case-section p { color: var(--fg); margin: 0 0 1rem; font-size: 0.96rem; max-width: 720px; }
+
+  .tldr {
+    font-size: 1.05rem; font-weight: 600; color: var(--fg);
+    max-width: 720px; margin: 0 0 1.1rem;
+  }
+
+  .callout {
+    background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 8px; padding: 1rem 1.2rem; margin: 0 0 1.3rem; font-size: 0.92rem; max-width: 720px;
+  }
+  .callout .label {
+    display: block; color: var(--accent); font-size: 0.78rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem;
+  }
+  .callout.insight { margin-top: 1.1rem; margin-bottom: 0; }
+
+  .notice {
+    display: block; background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--warn); border-radius: 8px;
+    padding: 0.7rem 1rem; margin: 0 0 1.4rem; font-size: 0.88rem; max-width: 720px;
+    color: var(--fg);
+  }
+  .notice b { color: var(--warn); }
+
+  .gallery {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.7rem; margin: 1.3rem 0;
+  }
+  .gallery a {
+    display: flex; flex-direction: column; border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--border); background: var(--card);
+  }
+  .gallery img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top;
+    display: block; background: var(--card);
+  }
+  .gallery .cap {
+    font-size: 0.74rem; color: var(--muted); padding: 0.45rem 0.55rem; line-height: 1.35;
+  }
+  .gallery .cap b { color: var(--accent); font-weight: 600; }
+  .gallery .cap i { font-style: normal; color: var(--warn); font-weight: 600; }
+
+  footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer a { color: var(--muted); margin-right: 1.2rem; text-decoration: none; }
+  footer a:hover { color: var(--fg); }
+
+  .floating-back {
+    position: fixed; right: 1.5rem; bottom: 1.5rem; z-index: 10;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--accent); color: #fff; text-decoration: none;
+    padding: 0.6rem 1.1rem; border-radius: 999px; font-size: 0.88rem; font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    opacity: 0; transform: translateY(8px); pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .floating-back.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .floating-back:hover { opacity: 0.9; }
+</style>
+
+<header>
+  <div class="logo">Lukas Sydel Harder</div>
+  <a class="back" href="../index.html#design">&larr; Back to portfolio</a>
+</header>
+
+<main>
+  <h1>Organic Light</h1>
+  <p class="subtitle">A kinetic flower lamp exploring organic movement and embodiment in an inorganic light form, built almost entirely from recycled aluminum cans.</p>
+
+  <div class="notice">
+    <b>Built from waste, on purpose.</b> We set ourselves a personal constraint: build the lamp almost entirely from reclaimed material, mainly aluminum cans, rather than buying new. The goal was never a finished commercial product, only to explore how organic movement and aesthetics could live in an everyday light fixture.
+  </div>
+
+  <div class="tags">
+    <span class="pill" style="--dot:#8a8a8a">Research through Design</span>
+    <span class="pill" style="--dot:#8a8a8a">Embodiment Theory</span>
+    <span class="pill" style="--dot:#8a8a8a">Sketching</span>
+    <span class="pill" style="--dot:#8a8a8a">Iterative Prototyping</span>
+  </div>
+  <div class="meta-row">
+    <span class="pill">Course project, Roskilde University</span>
+    <span class="pill">Team of 3</span>
+    <span class="pill">Stack: ESP32 · Servo Motor · NeoPixel LED · 3D Printing</span>
+  </div>
+
+  <p class="tldr">The project began as a way to visualize the length of a workday. It became something else entirely: an exploration of what organic movement itself could feel like.</p>
+  <p>Lamps are almost always stationary, with a single function: giving light. We wanted to challenge that. Over nine iterations we explored how a lamp could open and close like a flower, powered by a servo motor and lit from within, while sticking to a self-imposed constraint of building it from reused material.</p>
+
+  <section class="case-section" id="research-question">
+    <span class="eyebrow">Problem Field</span>
+    <h2>From tracking time to embodying movement</h2>
+    <div class="callout">
+      <span class="label">Research Question</span>
+      How can a lamp embody organic functionality and aesthetics?
+    </div>
+    <p>Our original idea was a lamp that visually communicated how close the workday was to ending, opening when you arrived at the office and closing when you left. As the project progressed, though, we realized we cared less about the office context and more about the organic quality of the motion itself: what it would feel like for light to move the way a plant does. That shift became the real question behind the project.</p>
+  </section>
+
+  <section class="case-section" id="approach">
+    <span class="eyebrow">Theory &amp; Method</span>
+    <h2>Research through design, grounded in embodiment</h2>
+    <p class="tldr">Instead of chasing a finished product, we treated every prototype as a way to learn about organic movement itself.</p>
+    <p>We used Research through Design (Bang &amp; Eriksen, 2014) as our methodological frame: the point was never the finished lamp, but what each prototype taught us about organic functionality and aesthetics in an inorganic object. Paul Dourish's concept of embodiment (2001), the idea that something meaningful happens when a phenomenon exists in real time and real space, shaped how we thought about the lamp's presence in a room. Throughout, we used physical sketching (Buxton, 2008), building small, rough versions of a mechanism before committing to it, to explore ideas with our hands rather than only on paper.</p>
+    <div class="figure">
+      <a href="images2/02-sketch-board.jpg" target="_blank" rel="noopener"><img src="images2/02-sketch-board.jpg" alt="Process wall with sketches, material references and iteration notes"></a>
+      <figcaption>Our process wall: sketches, references and notes used to keep a throughline across nine prototypes.</figcaption>
+    </div>
+  </section>
+
+  <section class="case-section" id="process">
+    <span class="eyebrow">The Iterative Process</span>
+    <h2>Nine iterations, from paper petals to a lit succulent</h2>
+    <p class="tldr">Every material taught us something before it failed: paper couldn't hold a curve, springs couldn't hold their tension, fabric couldn't survive the wind.</p>
+    <div class="figure">
+      <a href="images2/01-ref-shylights.jpg" target="_blank" rel="noopener"><img src="images2/01-ref-shylights.jpg" alt="Reference photo: Shylights installation by Studio Drift"></a>
+      <figcaption>Reference, not our work: "Shylights" by Studio Drift, our starting inspiration for a flower-like opening and closing motion.</figcaption>
+    </div>
+
+    <h3>1.0 – 2.0 · Paper and springs</h3>
+    <p>We started with a paper lampshade, cutting fringe into colored paper to let it bend into a flower-like shape. The paper couldn't hold up: it creased, jammed, and wouldn't spring back. Iteration 2.0 swapped in real springs, tensioned as a ring passed over them, but keeping them aligned proved just as hard. Stability became the priority for every iteration after this.</p>
+    <div class="gallery">
+      <a href="images2/03-it1-materials.jpg" target="_blank" rel="noopener"><img src="images2/03-it1-materials.jpg" alt="Testing colored paper as a shade material"><span class="cap">1.0 · Material test</span></a>
+      <a href="images2/04-it1-paper-petals.jpg" target="_blank" rel="noopener"><img src="images2/04-it1-paper-petals.jpg" alt="Fringe cut into paper to form petal shapes"><span class="cap">1.0 · Paper petals</span></a>
+      <a href="images2/05-it2-springs.jpg" target="_blank" rel="noopener"><img src="images2/05-it2-springs.jpg" alt="Spring-tensioned petal concept"><span class="cap">2.0 · Spring concept</span></a>
+    </div>
+
+    <h3>3.0 – 3.2 · Finding the mechanism</h3>
+    <p>This is where the core mechanism was born: a ring at the top, with four legs sliding through slots, closing the flower when pulled down and opening it when pulled up. It gave us the motion we were after, but the legs kept slipping out of their slots. We sketched through several fixes on the whiteboard before redesigning the legs and cutting the slots directly into the base.</p>
+    <div class="gallery">
+      <a href="images2/06-it3-stand.jpg" target="_blank" rel="noopener"><img src="images2/06-it3-stand.jpg" alt="Wood and copper-ring stand, the core mechanism"><span class="cap">3.0 · Core mechanism</span></a>
+      <a href="images2/07-it3-mechanism-sketches.jpg" target="_blank" rel="noopener"><img src="images2/07-it3-mechanism-sketches.jpg" alt="Whiteboard sketches exploring leg and slot mechanisms"><span class="cap">3.1 · Mechanism sketches</span></a>
+    </div>
+
+    <h3>4.0 · The umbrella detour</h3>
+    <p>We took a step back and tried building the skeleton from an umbrella frame with fabric stretched over it, closer in spirit to the fragility of a real flower. It looked more organic, but the frame couldn't take the strain of being pulled open and shut, and fabric wouldn't survive outdoors in wind. We dropped it in favor of something more robust.</p>
+    <div class="gallery">
+      <a href="images2/08-it4-umbrella-fabric.jpg" target="_blank" rel="noopener"><img src="images2/08-it4-umbrella-fabric.jpg" alt="Umbrella-skeleton prototype draped in sheer fabric"><span class="cap">4.0 · Umbrella + fabric</span></a>
+    </div>
+
+    <h3>5.0 – 5.2 · The compact skeleton</h3>
+    <p>Going back to iteration 2's idea, we redesigned it as two plates with slots riding on a servo-driven rail, small enough that we could drop the rail entirely once it proved stable. On top of that mechanism we added an ESP32 running four states (open, closed, and the transitions between), triggered by a single button, with NeoPixel LEDs cycling color as the flower opened and closed. Aluminum cans, cut and shaped into petals, gave us the reuse aesthetic fabric couldn't. The last step was a 3D-printed succulent, patterned after the Fibonacci sequence found throughout nature, used as a diffuser so the light glows through the center rather than just hanging below it.</p>
+    <div class="gallery">
+      <a href="images2/09-it5-rail-mechanism.jpg" target="_blank" rel="noopener"><img src="images2/09-it5-rail-mechanism.jpg" alt="Sliding rail mechanism component"><span class="cap">5.0 · Rail mechanism</span></a>
+      <a href="images2/10-it5-skeleton.jpg" target="_blank" rel="noopener"><img src="images2/10-it5-skeleton.jpg" alt="Assembled compact skeleton"><span class="cap">5.0 · Compact skeleton</span></a>
+      <a href="images2/12-it5-assembly.jpg" target="_blank" rel="noopener"><img src="images2/12-it5-assembly.jpg" alt="Assembling the ESP32 and servo electronics onto the skeleton"><span class="cap">5.1 · Wiring it up</span></a>
+      <a href="images2/11-it5-lit-petals.jpg" target="_blank" rel="noopener"><img src="images2/11-it5-lit-petals.jpg" alt="Aluminum-can petals lit from within by NeoPixel LEDs"><span class="cap">5.1 · Lit petals</span></a>
+    </div>
+    <div class="callout insight">
+      <span class="label">Insight</span>
+      The 5.0 skeleton was the breakthrough: stable enough that we could drop the sliding rail entirely, and simple enough to layer electronics and, later, a diffuser on top of without redesigning the mechanism again.
+    </div>
+  </section>
+
+  <section class="case-section" id="components">
+    <span class="eyebrow">Under the Hood</span>
+    <h2>Wiring the movement and the light</h2>
+    <p>An ESP32 drives the whole system. It's powered over USB, and a Wago connector splits that power out to the servo motor, the NeoPixel LED strip and the button module, each wired back into the ESP32 on its own pin (IO21, IO22 and IO33) to complete the circuit.</p>
+    <div class="figure">
+      <a href="images2/13-component-diagram.png" target="_blank" rel="noopener"><img src="images2/13-component-diagram.png" alt="Wiring diagram of the ESP32, servo motor, NeoPixel LED strip and button module"></a>
+      <figcaption>ESP32, servo motor, NeoPixel LED strip and button module, tied together through a shared power connector.</figcaption>
+    </div>
+  </section>
+
+  <section class="case-section" id="result">
+    <span class="eyebrow">The Result</span>
+    <h2>A flower that breathes</h2>
+    <p class="tldr">Aluminum-can petals close around a 3D-printed, Fibonacci-patterned succulent that diffuses the light from within.</p>
+    <p>We chose a succulent as the plant to model because its leaves grow in a pattern close to the Fibonacci sequence, the same sequence that shows up throughout nature, which gave the diffuser an organic visual logic beyond just looking plant-like. It also scatters the LED light more interestingly than a flat surface would, since light has to pass through many layers depending on the angle you view it from.</p>
+    <div class="gallery">
+      <a href="images2/14-ref-succulent.jpg" target="_blank" rel="noopener"><img src="images2/14-ref-succulent.jpg" alt="Reference photo of a blue succulent"><span class="cap"><i>Reference</i> · succulent (Erol Ahmed, Unsplash)</span></a>
+      <a href="images2/15-3d-print-succulent.jpg" target="_blank" rel="noopener"><img src="images2/15-3d-print-succulent.jpg" alt="3D-printed succulent diffuser"><span class="cap">Our print · model by Emma_Frch, Thingiverse</span></a>
+      <a href="images2/16-final-lamp.jpg" target="_blank" rel="noopener"><img src="images2/16-final-lamp.jpg" alt="The finished aluminum-can flower lamp"><span class="cap">Final build</span></a>
+    </div>
+  </section>
+
+  <section class="case-section" id="reflection">
+    <span class="eyebrow">Reflection</span>
+    <h2>What we'd do differently</h2>
+    <p class="tldr">The mechanism works, but it still reads as mechanical rather than organic. The next version aims for a softer transition.</p>
+    <p>Dourish (2001) distinguishes between two readings of embodiment: one where an object must physically manifest a phenomenon, and a looser one where it only needs to exist in real time and real space. Our lamp fits the looser definition more comfortably, since nature exists through it as a quality of movement rather than as a literal presence. Methodologically, we sketched constantly but never very rigorously: without something like Crazy 8's to structure the sketching sessions, some ideas (a weight-driven mechanism, in particular) kept resurfacing on paper without ever being built and tested. On materials, cans ultimately read as "reused" in a way fabric never did, even though fabric was easier to work with and looked more organic on its own.</p>
+    <div class="gallery">
+      <a href="images2/17-future-design-diagram.jpg" target="_blank" rel="noopener"><img src="images2/17-future-design-diagram.jpg" alt="Exploded diagram of a future design using aluminum, ball bearings and a lift-table leg mechanism"><span class="cap">Future design · exploded diagram</span></a>
+      <a href="images2/18-future-design-mockup.jpg" target="_blank" rel="noopener"><img src="images2/18-future-design-mockup.jpg" alt="Illustrative mockup of the future design in an outdoor setting"><span class="cap">Future design · mood mockup</span></a>
+      <a href="images2/19-ref-led-sphere.jpg" target="_blank" rel="noopener"><img src="images2/19-ref-led-sphere.jpg" alt="Reference photo of a spherical Fibonacci LED display"><span class="cap"><i>Reference</i> · LED sphere (fibonacci-teensy, GitHub)</span></a>
+    </div>
+    <div class="callout insight">
+      <span class="label">Future direction</span>
+      Rebuilding the skeleton in aluminum with bolts, ball bearings and a lift-table-style leg mechanism instead of a continuous servo, aiming for smoother, less mechanical movement.
+    </div>
+  </section>
+
+  <section class="case-section" id="conclusion">
+    <span class="eyebrow">Outcome</span>
+    <h2>Did it embody organic functionality and aesthetics?</h2>
+    <p>Partly. The opening and closing motion still has a mechanical harshness to it, especially at the top and bottom of its range, but combined with the 3D-printed succulent it reads unmistakably as a flower, and when it's switched on, the motion feels closer to breathing than to machinery. The next version would aim to soften that transition and move to more durable materials and a faster motor, without losing the reused-aluminum aesthetic that gives the piece its point of view.</p>
+  </section>
+</main>
+
+<footer id="contact">
+  <a href="https://github.com/LSHarder">GitHub</a>
+  <a href="mailto:l_sydel_harder@live.dk">Email</a>
+  <a href="https://www.linkedin.com/in/lukas-sydel-harder/">LinkedIn</a>
+</footer>
+
+<a class="floating-back" id="floating-back" href="../index.html#design">&larr; Back to portfolio</a>
+<script>
+  var floatingBack = document.getElementById('floating-back');
+  var footerEl = document.querySelector('footer#contact');
+  if (floatingBack && footerEl && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        floatingBack.classList.toggle('visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.1 });
+    observer.observe(footerEl);
+  }
+</script>
