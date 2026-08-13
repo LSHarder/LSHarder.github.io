@@ -1,0 +1,309 @@
+
+<title>Autonomous Plant Watering — Lukas Sydel Harder</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #666666;
+    --card: #f5f5f5;
+    --border: #e2e2e2;
+    --accent: #2563eb;
+    --warn: #b45309;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12141a;
+      --fg: #e8e8e8;
+      --muted: #9a9a9a;
+      --card: #1b1e26;
+      --border: #2a2d36;
+      --accent: #6ea8fe;
+      --warn: #fbbf24;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 1rem;
+  }
+  header a.back { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+  header a.back:hover { color: var(--fg); }
+  .logo { font-weight: 600; }
+  main { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+
+  h1 { font-size: 2.1rem; margin: 0 0 0.5rem; }
+  .subtitle { color: var(--muted); font-size: 1.05rem; margin-bottom: 0.9rem; max-width: 640px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 0.4rem 0.6rem; margin: 0 0 1.1rem; }
+  .meta-row .pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.2rem 0.7rem; border-radius: 999px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--muted); font-size: 0.78rem; font-weight: 500;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.4rem; }
+  .tags.small { margin: 0 0 1.1rem; }
+  .tags .pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.2rem 0.7rem; border-radius: 999px;
+    background: var(--border); color: var(--fg);
+    font-size: 0.78rem; font-weight: 500;
+  }
+  .tags.small .pill { font-size: 0.72rem; padding: 0.15rem 0.6rem; }
+  .tags .pill::before {
+    content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%;
+    background: var(--dot, var(--accent));
+  }
+
+  .figure { margin: 1.5rem 0; }
+  .figure img {
+    width: 100%; display: block; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--card);
+  }
+  .figure figcaption { color: var(--muted); font-size: 0.82rem; margin-top: 0.5rem; }
+
+  .case-section { padding: 2.75rem 0; border-top: 1px solid var(--border); }
+  .case-section:first-of-type { border-top: none; padding-top: 0.5rem; }
+  .case-section .eyebrow {
+    color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em;
+    font-size: 0.78rem; font-weight: 600; margin-bottom: 0.5rem;
+  }
+  .case-section h2 { font-size: 1.45rem; margin: 0 0 0.7rem; }
+  .case-section h3 { font-size: 1.05rem; margin: 1.8rem 0 0.5rem; }
+  .case-section h3:first-of-type { margin-top: 0.8rem; }
+  .case-section p { color: var(--fg); margin: 0 0 1rem; font-size: 0.96rem; max-width: 720px; }
+
+  .tldr {
+    font-size: 1.05rem; font-weight: 600; color: var(--fg);
+    max-width: 720px; margin: 0 0 1.1rem;
+  }
+
+  .callout {
+    background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 8px; padding: 1rem 1.2rem; margin: 0 0 1.3rem; font-size: 0.92rem; max-width: 720px;
+  }
+  .callout .label {
+    display: block; color: var(--accent); font-size: 0.78rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem;
+  }
+  .callout.insight { margin-top: 1.1rem; margin-bottom: 0; }
+
+  .notice {
+    display: block; background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--warn); border-radius: 8px;
+    padding: 0.7rem 1rem; margin: 0 0 1.4rem; font-size: 0.88rem; max-width: 720px;
+    color: var(--fg);
+  }
+  .notice b { color: var(--warn); }
+
+  .gallery {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.7rem; margin: 1.3rem 0;
+  }
+  .gallery a {
+    display: flex; flex-direction: column; border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--border); background: var(--card);
+  }
+  .gallery img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top;
+    display: block; background: var(--card);
+  }
+  .gallery .cap {
+    font-size: 0.74rem; color: var(--muted); padding: 0.45rem 0.55rem; line-height: 1.35;
+  }
+  .gallery .cap b { color: var(--accent); font-weight: 600; }
+  .gallery .cap i { font-style: normal; color: var(--warn); font-weight: 600; }
+
+  footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer a { color: var(--muted); margin-right: 1.2rem; text-decoration: none; }
+  footer a:hover { color: var(--fg); }
+
+  .floating-back {
+    position: fixed; right: 1.5rem; bottom: 1.5rem; z-index: 10;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--accent); color: #fff; text-decoration: none;
+    padding: 0.6rem 1.1rem; border-radius: 999px; font-size: 0.88rem; font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    opacity: 0; transform: translateY(8px); pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .floating-back.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .floating-back:hover { opacity: 0.9; }
+</style>
+
+<header>
+  <div class="logo">Lukas Sydel Harder</div>
+  <a class="back" href="../index.html#design">&larr; Back to portfolio</a>
+</header>
+
+<main>
+  <h1>Autonomous Plant Watering</h1>
+  <p class="subtitle">A kit-based, autonomous watering system for houseplants, developed across three iterations to test whether a small, individual design choice can meaningfully connect to the planetary-scale problem of CO₂.</p>
+
+  <div class="notice">
+    <b>A wicked problem, taken personally.</b> CO₂ contamination is a wicked problem: too large, too tangled, to "solve" with a single design. Rather than aim for a finished commercial product, we treated this project as a way to generate insight, using Ida Engholm's <i>Design for the New World</i> to widen our own frame from a human-centered to a planet-centered perspective.
+  </div>
+
+  <div class="tags">
+    <span class="pill" style="--dot:#8a8a8a">Design for the New World</span>
+    <span class="pill" style="--dot:#8a8a8a">Speculative Design</span>
+    <span class="pill" style="--dot:#8a8a8a">Design Sprint</span>
+    <span class="pill" style="--dot:#8a8a8a">Maker Mindset</span>
+  </div>
+  <div class="meta-row">
+    <span class="pill">Course project, Roskilde University</span>
+    <span class="pill">Team of 3</span>
+    <span class="pill">Stack: ESP8266 · Capacitive Moisture Sensor · Relay · Submersible Pump</span>
+  </div>
+
+  <p class="tldr">Three iterations, three different plant pots, one shifting question: not "how do we build a smart plant pot," but "how much expertise are we quietly asking the plant owner to have?"</p>
+  <p>People kill houseplants constantly, usually just by over- or under-watering them, and that small everyday failure is part of a much bigger pattern: fewer plants in the home means less CO₂ converted back into oxygen. We set out to design an autonomous watering system that removes that guesswork, using a research-through-design process grounded in Engholm's planetary framing of the problem and a "maker mindset" approach of learning by building rather than by planning up front.</p>
+
+  <section class="case-section" id="problem">
+    <span class="eyebrow">Problem Field</span>
+    <h2>From a dying houseplant to a planetary perspective</h2>
+    <div class="callout">
+      <span class="label">Research Question</span>
+      How can we design a high-tech plant system that autonomously meets a plant's need for water, to ensure optimal wellbeing in the home without human involvement?
+    </div>
+    <p>Outdoor green walls already exist in cities and even in retail stores, converting CO₂ into oxygen and improving air quality, but they demand expert maintenance most households can't provide. We asked: what would it take to bring that principle indoors, into an ordinary home, without requiring the owner to become a plant expert? Existing solutions on the market, from self-watering glass bulbs to drip-irrigation kits to fully integrated hydroponic planters, either lacked the technology to identify what a specific plant actually needed, or solved it by selling an entirely new, closed pot rather than working with the plants people already own.</p>
+    <div class="gallery">
+      <a href="images3/16-result-windowsill.png" target="_blank" rel="noopener"><img src="images3/16-result-windowsill.png" alt="Illustration of several potted plants lined up on a windowsill" style="object-position: center bottom;"><span class="cap">The everyday context we designed for: plants left to fend for themselves on a windowsill</span></a>
+    </div>
+  </section>
+
+  <section class="case-section" id="theory">
+    <span class="eyebrow">Theory &amp; Method</span>
+    <h2>Design for the New World, and a maker mindset</h2>
+    <p class="tldr">Engholm's theory argues for a shift from human-centered to planet-centered design thinking, and for prototyping your way toward wicked problems rather than planning a solution up front.</p>
+    <p>We grounded the project in Ida Engholm's 2023 book <i>Design for the New World: From Human Design to Planet</i>, which argues that designers need to move from a human-centered to a world-centered perspective, and that wicked problems like climate change can't be solved with a single ready-made answer: the only way in is to prototype toward a better outcome and share what you learn along the way. That fit naturally with a maker mindset and Research through Design (Dalsgaard, 2010): the finished pot was never the point, the insight generated by each prototype was. On top of that theoretical frame, we layered concrete methods borrowed from speculative design (Auger, 2013), Google's Design Sprint (Knapp &amp; Kowitz, 2016), and Wizard-of-Oz prototyping (Greenberg et al., 2011) to structure three very different iterations.</p>
+    <div class="figure">
+      <a href="images3/10-padlet-hmw.png" target="_blank" rel="noopener"><img src="images3/10-padlet-hmw.png" alt="Padlet board with How Might We questions, sorted into columns: what we know, how might we, can we, and a two-year vision"></a>
+      <figcaption>Our "How Might We" board, used to open up the problem space before committing to a direction.</figcaption>
+    </div>
+  </section>
+
+  <section class="case-section" id="state-of-the-art">
+    <span class="eyebrow">Groundwork</span>
+    <h2>State of the art: primitive, high-tech, and everything in between</h2>
+    <p>Before sketching anything, we mapped what already existed, from the fully primitive (self-watering glass bulbs, drip bags) to the fully integrated (hydroponic planters with built-in grow lights) to large-scale references like an automatically irrigated green wall installed in an Apple store. None of them solved the actual gap we were interested in: a system that works with the pot you already own, and that knows what kind of plant it's watering.</p>
+    <div class="gallery">
+      <a href="images3/17-ai-generated-concept.png" target="_blank" rel="noopener"><img src="images3/17-ai-generated-concept.png" alt="AI-generated concept image of a robotic autonomous plant watering device"><span class="cap"><i>AI-generated</i> · early concept visualization, ChatGPT prompt "automated plant watering"</span></a>
+    </div>
+  </section>
+
+  <section class="case-section" id="iteration-1">
+    <span class="eyebrow">Iteration 1 · Speculative Design</span>
+    <h2>What if CO₂ levels were too high?</h2>
+    <p class="tldr">We picked the what-if question that felt most urgent, wrote a short speculative scenario around it, and built our first sketch-prototype directly from that story.</p>
+    <p>We opened with a round of what-if questions (Auger, 2013) to get some distance from our own preconceptions, then voted on the one that fit our context best: <i>what if CO₂ levels were too high?</i> From there we wrote a short speculative scenario, a morning in a world where a neighborhood's air quality is publicly displayed and neighbors quietly compete to keep their houseplants alive, and used that story to anchor our first design: a pot with a built-in shower-head sprinkler that could water both the soil and the leaves.</p>
+    <div class="gallery">
+      <a href="images3/03-whatif-stickies.jpg" target="_blank" rel="noopener"><img src="images3/03-whatif-stickies.jpg" alt="Sticky notes with what-if questions, one selected"><span class="cap">What-if brainstorm, before voting on a direction</span></a>
+      <a href="images3/05-it1-solution-sketch.png" target="_blank" rel="noopener"><img src="images3/05-it1-solution-sketch.png" alt="Sketch of a pot with an internal water tank"><span class="cap">Early sketch: internal tank feeding a sprinkler head</span></a>
+      <a href="images3/06-it1-sprinkler-head.png" target="_blank" rel="noopener"><img src="images3/06-it1-sprinkler-head.png" alt="Perforated paper mock-up of a sprinkler head"><span class="cap">Sprinkler head mock-up, punched paper cone</span></a>
+      <a href="images3/07-it1-paper-pot.png" target="_blank" rel="noopener"><img src="images3/07-it1-paper-pot.png" alt="Paper mock-up of the pot shell"><span class="cap">Pot shell, early paper mock-up</span></a>
+    </div>
+    <div class="gallery">
+      <a href="images3/08-it1-final-prototype.png" target="_blank" rel="noopener"><img src="images3/08-it1-final-prototype.png" alt="Finished iteration 1 prototype: paper pot with sprinkler head and plant"><span class="cap">Iteration 1, assembled</span></a>
+      <a href="images3/09-it1-usecase.png" target="_blank" rel="noopener"><img src="images3/09-it1-usecase.png" alt="Four-panel use case sketch showing the watering cycle over a week"><span class="cap">Use case: fill on day 1, autonomous watering through day 7</span></a>
+    </div>
+    <div class="callout insight">
+      <span class="label">Insight</span>
+      Auger's model asks a speculative concept to sit in a middle ground: not too alien, but not too grounded either. Ours landed on the too-grounded side, more a sketch for a product than a speculative provocation. That groundedness meant it survived into the next iteration instead of becoming a discarded outlier: the sprinkler head turned out to be a genuinely useful watering method for leaf-loving plants.
+    </div>
+  </section>
+
+  <section class="case-section" id="iteration-2">
+    <span class="eyebrow">Iteration 2 · Design Sprint</span>
+    <h2>What people actually said: keep my own pot</h2>
+    <p class="tldr">A full design-sprint day, followed by group interviews, reversed our starting assumption: nobody wanted to buy a whole new pot.</p>
+    <p>Iteration 2 ran a compressed design sprint (Knapp &amp; Kowitz, 2016): HMW questions, lightning demos to scout feasible technology, Crazy 8's, solution sketches, and a final vote that landed on a concept we nicknamed "Sprinkle Star." We built it as a low-fidelity, Wizard-of-Oz prototype, wiring wasn't live, but it let us walk interview participants through the concept convincingly. Three semi-structured group interviews followed.</p>
+    <div class="gallery">
+      <a href="images3/04-whatif-working.jpg" target="_blank" rel="noopener"><img src="images3/04-whatif-working.jpg" alt="Working through the sprint exercises with sticky notes and colored paper"><span class="cap">Sprint exercises in progress</span></a>
+      <a href="images3/18-it2-laser-cut-box.png" target="_blank" rel="noopener"><img src="images3/18-it2-laser-cut-box.png" alt="Laser-cut hexagonal enclosure, made with MakerCase"><span class="cap">Enclosure, laser-cut with MakerCase</span></a>
+      <a href="images3/15-it2-final-kit.png" target="_blank" rel="noopener"><img src="images3/15-it2-final-kit.png" alt="The assembled low-fidelity prototype, with a real plant, sitting on a windowsill"><span class="cap">Assembled low-fi prototype, used in the Wizard-of-Oz interviews</span></a>
+    </div>
+    <div class="callout insight">
+      <span class="label">Insight</span>
+      Interview participants consistently pushed back on owning a new pot: they wanted to keep the plants and pots they already had, an "adaptive," reuse-minded stance we hadn't designed for yet. That single insight reframed the rest of the project from "a smart pot" to "a kit that fits your existing pot," which became the brief for iteration 3.
+    </div>
+  </section>
+
+  <section class="case-section" id="iteration-3">
+    <span class="eyebrow">Iteration 3 · High-Fidelity Prototype</span>
+    <h2>Making the electronics actually work</h2>
+    <p class="tldr">An ESP8266, a capacitive moisture sensor, a relay and a submersible pump, calibrated by hand against dry and fully-watered soil.</p>
+    <p>With the kit-based direction set, iteration 3 shifted almost entirely to the technical build: an ESP8266 wired through a breadboard to a relay board, a capacitive soil moisture sensor, and a submersible pump. Neither of us had used the Arduino IDE before, so we ran the sensor against dry and freshly-watered soil to find working thresholds: a reading of roughly 2300+ meant "wet," near 0 meant "bone dry," with a rough middle band in between. Around that working electronics core, we sketched and voted on the final form: a tray-shaped tank that sits underneath an existing pot, refilled through a small funnel, with the pump housed as a "cute" disguised component outside the tank.</p>
+    <div class="gallery">
+      <a href="images3/13-it3-workbench.png" target="_blank" rel="noopener"><img src="images3/13-it3-workbench.png" alt="Workbench with laptop, breadboard, sensor and a wilting test plant"><span class="cap">Testing the moisture sensor against a real, thirsty plant</span></a>
+      <a href="images3/12-it3-sensor-calibration.png" target="_blank" rel="noopener"><img src="images3/12-it3-sensor-calibration.png" alt="Whiteboard diagram of the sensor, battery, ESP32 and pump, with calibration values noted"><span class="cap">Whiteboarding the circuit and calibration values</span></a>
+      <a href="images3/11-it3-plate-crazy8.png" target="_blank" rel="noopener"><img src="images3/11-it3-plate-crazy8.png" alt="Crazy 8's sketches exploring a plate-shaped water tank that sits under an existing pot"><span class="cap">Crazy 8's: a tank shaped like the underplate of a pot</span></a>
+      <a href="images3/14-it3-final-sketch.png" target="_blank" rel="noopener"><img src="images3/14-it3-final-sketch.png" alt="Sketch of the final tray-shaped tank with a funnel and pump"><span class="cap">Final concept: tray tank, funnel refill, disguised pump</span></a>
+    </div>
+    <div class="callout insight">
+      <span class="label">Insight</span>
+      A moisture sensor alone isn't enough: our own DIY system would happily overwater a moisture-sensitive plant like an orchid, because it has no concept of which plant it's watering. Without a camera or database lookup to identify the plant, the "autonomous" system still quietly demands expertise from the owner.
+    </div>
+  </section>
+
+  <section class="case-section" id="portfolio">
+    <span class="eyebrow">Synthesis</span>
+    <h2>Annotated portfolio: mapping three iterations against the market</h2>
+    <p>We closed the design process by mapping our three iterations, and the state-of-the-art products we started from, onto shared axes: how visible the design is, how primitive or high-tech it is, and whether a given direction became a core thread or an outlier we chose not to pursue.</p>
+    <div class="figure">
+      <a href="images3/01-annotated-portfolio-map.png" target="_blank" rel="noopener"><img src="images3/01-annotated-portfolio-map.png" alt="Annotated portfolio map plotting iterations 1 through 3 and reference products against axes of visibility and technology level"></a>
+      <figcaption>Annotated portfolio: our three iterations and the state-of-the-art, plotted by visibility and technology level.</figcaption>
+    </div>
+  </section>
+
+  <section class="case-section" id="reflection">
+    <span class="eyebrow">Reflection</span>
+    <h2>What we'd do differently</h2>
+    <p>Starting with speculative design pushed our first prototype to be more grounded than Auger's model really intends, an "alien" scenario like a plant-covered dome over a whole neighborhood might have opened up more radical directions. Doing speculative design after a first grounded iteration, instead of before it, might strike a better balance. Group interviews worked well for us specifically because we're a group of three: no facilitator or decider role needed, which gave the sessions the feel of a real conversation rather than a moderated study. Sustainability-wise, the kit-based, reuse-your-own-pot approach is the part we're most confident in, it's a genuinely modular, repairable design in the spirit of what Engholm calls for. The part we're least confident in is trusting the technology completely: an autonomous system that "just works" risks the owner disengaging from the plant entirely, and if they eventually forget to refill the tank, the plant dies anyway, just later and more anonymously.</p>
+  </section>
+
+  <section class="case-section" id="conclusion">
+    <span class="eyebrow">Outcome</span>
+    <h2>A step toward the wicked problem, not a solution to it</h2>
+    <p>Our system works, in the narrow sense: an ESP8266-driven kit that senses soil moisture and pumps water into a tray beneath an existing pot. But our own conclusion is blunt about its limits: without a plant-identification layer tied to a database, an autonomous watering system doesn't remove the need for expertise, it just hides where that expertise is required until something goes wrong. We don't think this project solves CO₂ contamination, no single design does, but Engholm's framing gave us a way to treat a small, personal design problem as one thread in a much larger, shared one, and to hand our insights forward rather than treat the prototype as the end point.</p>
+  </section>
+</main>
+
+<footer id="contact">
+  <a href="https://github.com/LSHarder">GitHub</a>
+  <a href="mailto:l_sydel_harder@live.dk">Email</a>
+  <a href="https://www.linkedin.com/in/lukas-sydel-harder/">LinkedIn</a>
+</footer>
+
+<a class="floating-back" id="floating-back" href="../index.html#design">&larr; Back to portfolio</a>
+<script>
+  var floatingBack = document.getElementById('floating-back');
+  var footerEl = document.querySelector('footer#contact');
+  if (floatingBack && footerEl && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        floatingBack.classList.toggle('visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.1 });
+    observer.observe(footerEl);
+  }
+</script>
