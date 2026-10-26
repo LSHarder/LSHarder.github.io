@@ -1,0 +1,179 @@
+
+<title>Real-Time Face Tracking — Lukas Sydel Harder</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #666666;
+    --card: #f5f5f5;
+    --border: #e2e2e2;
+    --accent: #2563eb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12141a;
+      --fg: #e8e8e8;
+      --muted: #9a9a9a;
+      --card: #1b1e26;
+      --border: #2a2d36;
+      --accent: #6ea8fe;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 1rem;
+  }
+  header a.back { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+  header a.back:hover { color: var(--fg); }
+  .logo { font-weight: 600; }
+  main { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+
+  h1 { font-size: 2.1rem; margin: 0 0 0.5rem; }
+  .subtitle { color: var(--muted); font-size: 1.05rem; margin-bottom: 0.9rem; max-width: 640px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 0.4rem 0.6rem; margin: 0 0 1.1rem; }
+  .meta-row .pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.2rem 0.7rem; border-radius: 999px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--muted); font-size: 0.78rem; font-weight: 500;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.4rem; }
+  .tags .pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.2rem 0.7rem; border-radius: 999px;
+    background: var(--border); color: var(--fg);
+    font-size: 0.78rem; font-weight: 500;
+  }
+  .tags .pill::before {
+    content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%;
+    background: var(--dot, var(--accent));
+  }
+  .intro p { max-width: 700px; font-size: 0.98rem; }
+  .intro { margin-bottom: 1.5rem; }
+
+  .demo-frame {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #000;
+    margin: 1.5rem 0;
+  }
+  .demo-frame iframe {
+    display: block;
+    width: 100%;
+    height: 560px;
+    border: 0;
+  }
+  .demo-caption { color: var(--muted); font-size: 0.82rem; margin: 0.6rem 0 0; }
+
+  .case-section { padding: 2rem 0; border-top: 1px solid var(--border); }
+  .case-section h2 { font-size: 1.2rem; margin: 0 0 0.7rem; }
+  .case-section p { color: var(--fg); margin: 0 0 1rem; font-size: 0.96rem; max-width: 720px; }
+
+  .callout {
+    background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 8px; padding: 1rem 1.2rem; margin: 0 0 1.3rem; font-size: 0.92rem; max-width: 720px;
+  }
+  .callout .label {
+    display: block; color: var(--accent); font-size: 0.78rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem;
+  }
+
+  footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer a { color: var(--muted); margin-right: 1.2rem; text-decoration: none; }
+  footer a:hover { color: var(--fg); }
+
+  .floating-back {
+    position: fixed; right: 1.5rem; bottom: 1.5rem; z-index: 10;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--accent); color: #fff; text-decoration: none;
+    padding: 0.6rem 1.1rem; border-radius: 999px; font-size: 0.88rem; font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    opacity: 0; transform: translateY(8px); pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .floating-back.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .floating-back:hover { opacity: 0.9; }
+</style>
+
+<header>
+  <div class="logo">Lukas Sydel Harder</div>
+  <a class="back" href="../index.html#projects">&larr; Back to portfolio</a>
+</header>
+
+<main>
+  <h1>Real-Time Face Tracking</h1>
+  <p class="subtitle">Browser-based face landmark tracking, running entirely on-device with no server round-trip.</p>
+
+  <div class="tags">
+    <span class="pill" style="--dot:#ED225D">p5.js</span>
+    <span class="pill" style="--dot:#000000">ml5.js</span>
+    <span class="pill" style="--dot:#8a8a8a">WebGL</span>
+    <span class="pill" style="--dot:#8a8a8a">Computer Vision</span>
+  </div>
+  <div class="meta-row">
+    <span class="pill">Built for an MSc thesis project</span>
+    <span class="pill">Runs fully in-browser</span>
+    <span class="pill">Stack: p5.js · ml5.js faceMesh · WebGL</span>
+  </div>
+
+  <div class="intro">
+    <p>ml5.js's faceMesh runs a MediaPipe face-landmark model directly in the browser via TensorFlow.js, no video is ever sent to a server. This sketch reads a webcam feed, detects a face in real time, and plots each tracked landmark as a point in a WebGL canvas.</p>
+    <p>It started as the "face" of a Wizard-of-Oz AI hologram for a museum exhibition, see the case study below, and lives here on its own as a small, self-contained real-time computer vision demo.</p>
+  </div>
+
+  <div class="demo-frame">
+    <iframe src="facemesh-demo/index.html" allow="camera" title="Live face tracking demo"></iframe>
+  </div>
+  <p class="demo-caption">Click "Start camera" inside the frame above to run it live. Nothing is uploaded or recorded, tracking runs locally in your browser.</p>
+
+  <section class="case-section" id="context">
+    <h2>Where this came from</h2>
+    <p>For my MSc thesis with the National Museum of Denmark, we tested whether a talking AI hologram could make a static exhibition more engaging. This face-mesh sketch played the AI's "face": a live video feed, reflected through laser-cut acrylic to fake a 3D hologram, while a researcher spoke as the AI in real time.</p>
+    <div class="callout">
+      <span class="label">Work in progress, on purpose</span>
+      The sketch also loads a 3D model (a T-Rex mesh) meant to sit on top of the tracked face, but that part of the code is currently commented out while the model's rotation and positioning gets worked out. Shipped here as-is, dots only, rather than papered over.
+    </div>
+    <p><a href="../design/piece-one.html#iteration-2">See the full museum storytelling case study &rarr;</a></p>
+  </section>
+</main>
+
+<footer id="contact">
+  <a href="https://github.com/LSHarder">GitHub</a>
+  <a href="mailto:l_sydel_harder@live.dk">Email</a>
+  <a href="https://www.linkedin.com/in/lukas-sydel-harder/">LinkedIn</a>
+</footer>
+
+<a class="floating-back" id="floating-back" href="../index.html#projects">&larr; Back to portfolio</a>
+<script>
+  var floatingBack = document.getElementById('floating-back');
+  var footerEl = document.querySelector('footer#contact');
+  if (floatingBack && footerEl && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        floatingBack.classList.toggle('visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.1 });
+    observer.observe(footerEl);
+  }
+</script>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js"
+      integrity="sha512-v/wOVTkoU7mXEJC3hXnw9AA6v32qzpknvuUF6J2Lbkasxaxn2nYcl+HGB7fr/kChGfCqubVr1n2sq1UFu3Gh1w=="
+      crossorigin="anonymous"
+    ></script>
+
+    <title>ixd faceMesh</title>
+    <!-- p5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+      #start-overlay {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.9rem;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 10;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        text-align: center;
+        padding: 1.5rem;
+      }
+      #start-overlay button {
+        font: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        border-radius: 999px;
+        border: none;
+        background: #2563eb;
+        color: #fff;
+        cursor: pointer;
+      }
+      #start-overlay button:hover { background: #1d4ed8; }
+      #start-overlay p {
+        color: #ddd;
+        font-size: 0.85rem;
+        max-width: 320px;
+        margin: 0;
+      }
+    </style>
+
+    <!-- ml5 -->
+    <script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
+    <script src="helpers.js" type="text/javascript"></script>
+  </head>
+
+  <body>
+    <div id="start-overlay">
+      <button id="start-btn">&#9658; Start camera</button>
+      <p>Uses your webcam for live face tracking, locally in the browser. Nothing is recorded or sent anywhere.</p>
+    </div>
+    <script src="sketch.js"></script>
+    <script>
+      document.getElementById('start-btn').addEventListener('click', function () {
+        document.getElementById('start-overlay').remove();
+        startDemo();
+      });
+    </script>
+  </body>
+</html>
